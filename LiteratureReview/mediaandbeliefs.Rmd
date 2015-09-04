@@ -1,0 +1,22 @@
+---
+title: "The Influence of Modern Media"
+output: html_document
+bibliography: citations1.bib
+nocite: |
+    @jeffres_media_2011, @harrison_orbe_2012, @edgerly_red_2015, @orbe_representations_2008, @ponder_selectively_2015, @stromback_dynamics_2012, @happer_role_2013, @prior_youve_2010
+---
+
+
+
+I have decided to study the association of the present day's media influence with the populations opinions. I used key words such as political affiliation, media, public opinion, and influence. I have noticed in my research that media may, in fact, alter a person's beliefs (even without their knowledge). I plan to study this further and understand to what degree the media can affect one person's opinions and ideals.
+
+
+While reading my selected articles, I have noticed a few themes:  
+1. Media may the ability to influence a group of people without the people even being aware of it.
+2. People get most of their news from partisan news outlets and therefore become more likely to be influenced by this media.  
+3. Media may be at fault for influencing what one identifies as 'normal', 'beautiful', and/or 'ugly'.  
+4. Media may have an effect on cultural appropriation, as well as racism, sexism, classism, and other issues concerning race, gender, and sexual orientation.  
+
+I added questions about cultural appropriation, sexism, and political beliefs because I find they are relevant in discussing the issues present in modern-day media and its influence and I may want to research these specific ideas further. 
+
+## References
