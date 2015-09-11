@@ -1,0 +1,29 @@
+---
+title: "How Modern Media can Influence the Populations Opinions"
+output: html_document
+bibliography: citations1.bib
+nocite: |
+    @jeffres_media_2011, @harrison_orbe_2012, @edgerly_red_2015, @orbe_representations_2008, @ponder_selectively_2015, @stromback_dynamics_2012, @happer_role_2013, @prior_youve_2010
+---
+
+
+The media is an influential factor in modern society. One could turn on the television, pick up a newspaper, or go onto their computer and find the current events. But how much does that affect us? Evidence suggests that the media can impact an individual's way of thinking on subjects such as politics and racism [@jeffres_media_2011; @harrison_orbe_2012].   
+
+While it is true that modern media can be impartial, most well-known media outlets are partisan. Many citizens can get their news from TV. The present study will examine people from the Outlook on Life study and how the media may have affected their judgments [@stromback_dynamics_2012; @happer_role_2013].  
+
+# Methods:  
+## Sample 
+The sample that is used in this study is the Outlook on Life that was collected using an internet panel. The sample people used were asked a variety of questions on social and political issues of modern society. The sample targeted African American/Black males over 18, African American/Black females over 18, Causasian/White males over 18, and Caucasian/White females over 18. Participants were chosen from the GfK knowledge network, which is a online panel that is supposed to represent the population of the United States.  
+
+## Procedure  
+Participants sat down at a computer and filled out two individual surveys between the months of August and December of 2012. The type of data collected was quantitative and it was collected by use of a web-based survey.
+
+## Measures  
+The Outlook on Life study measures the amount a person is knowledgeable about political and social issues of this day and age. Political affiliation, social standing, and stance on common issues were all examined and measured quantitatively throughout two surveys that were dispersed within 4 months. Participants were asked to rate certain social and political issues presented often by asking them their opinions on a score from one to one hundred percent.  
+
+## Implications  
+The present study will help determine if media can have an effect on cultural appropriation, as well as racism, sexism, classism, and other issues concerning race, gender, and sexual orientation. If media is to blame for most of these problems, it might encourage more to change how media represents itself and current events in hopes to encourage more equality amoung society.
+
+## References  
+
+
