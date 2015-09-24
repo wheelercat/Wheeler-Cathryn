@@ -1,0 +1,27 @@
+# Cathryn Wheeler
+# 9/22/2015
+
+##Purpose of Study:  
+For this study, I have referenced the Outlook On Life dataset. The purpose of this study is to examine whether modern media has an effect on the opinions of the citizens of the United States. The goals of this study are to (1) establish a relationship between Americans and media and (2) determine if American attitudes are swayed by the media.  
+
+##Variables:  
+Variables I have considered in my data include W1_A1 (how interested participants are in what is going on in politics and government), W1_A2 (have participants thought about the upcoming election of 2012 recently, W1_A11 (how many times participants have watched national news programs on TV or on the Internet in the past week), and W1_C1 (what do participants identify as: Democratic, Republican, Independent, or other).
+
+'''{r comment = NA}
+knitr::opts_chunk$set(comment = NA, message = FALSE, warning = FALSE, fig.align = "center")
+library(PDS)
+library(dplyr)
+OOL.sub <- OOL.sub %>% 
++   rename(InterestInPolitics = W1_A1, ThoughtsOnUpcomingElections = W1_A2, WatchNews = W1_A11, PoliticalAffiliation = W1_C1) %>%
++   select(W1_A1, CW1_A2, AGE, W1_A11, W1_C1, SEX)
+summary(OOL.sub)
+head(OOL)
+str(OOL)
+OOL$InterestInPolitics <- factor(OOL$InterestInPolitics,labels=c("Extremely Interested","Very Interested", "Moderately Interested", "Slightly Interested", "Not Interested", "Refused"))
+OOL$ThoughtsOnUpcomingElections <- factor(OOL$ThoughtsOnUpcomingElections,labels=c("Quite a lot", "Somewhat a lot", "Somewhat a little", "Only a little", "Not at all", "Refused"))
+OOL$WatchNews <- factor(OOL$WatchNews,labels=c ("None", "One Day", "Two Days", "Three Days", "Four Days", "Five Days", "Six Days", "Seven Days" "Refused"))
+OOL$PoliticalAffiliation <- factor(OOL$PoliticalAffiliation, labels=c("Republican", "Democratic", "Independent", "Something Else", "Refused"))
+OOL$InterestInPolitics [OOL$InterestInPolitics == 996] <- NA
+OOL$InterestInPolitics [OOL$InterestInPolitics == 998] <- NA
+OOL$InterestInPolitics [OOL$InterestInPolitics == 999] <- NA
+str(OOL)
