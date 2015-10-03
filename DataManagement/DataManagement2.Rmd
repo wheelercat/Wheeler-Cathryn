@@ -1,0 +1,100 @@
+---
+title: The Association Between Modern Media and Public Opinions
+author: 
+date: "September 25, 2015"
+output: html_document
+---
+
+##Summary and Purpose of Study:  
+The data was collected using two online surveys between the months of August and December of 2012. Political affiliation, social standing, and stance on common issues were all examined and measured quantitatively throughout two surveys that were dispersed within 4 months. Participants were asked to rate certain social and political issues presented often by asking them their opinions on a score from one to one hundred percent. The sample targeted African American/Black males over 18, African American/Black females over 18, Causasian/White males over 18, and Caucasian/White females over 18. Participants were chosen from the GfK knowledge network, which is a online panel that is supposed to represent the population of the United States. The data highlighted here is political interest, how often they keep themselves up-to-date on current events, and political affiliation. For this study, I have referenced the Outlook On Life dataset. 
+
+The purpose of this study is to examine whether modern media has an effect on the opinions of the citizens of the United States. The goals of this study are to (1) establish a relationship between Americans and media and (2) determine if American attitudes are swayed by the media.  
+
+##Variables:  
+Variables I have considered in my data include W1_A1 (how interested participants are in what is going on in politics and government), W1_A2 (have participants thought about the upcoming election of 2012 recently), W1_A11 (how many times participants have watched national news programs on TV or on the Internet in the past week), and W1_C1 (what do participants identify as: Democratic, Republican, Independent, or other).    
+
+
+
+```{r comment = NA}
+library(PDS)
+library(dplyr)
+OOL.sub <- OOL %>% 
+   rename(InterestPol = W1_A1, ThoughtsElections = W1_A2, WatchNews = W1_A11, PoliticalAffil = W1_C1) %>%
+   select(InterestPol, ThoughtsElections, WatchNews, PoliticalAffil)
+summary(OOL.sub)
+OOL.sub$InterestPol[OOL.sub$InterestPol == -1] <- NA
+OOL.sub$InterestPol <- factor(OOL.sub$InterestPol,labels=c("Extremely Interested","Very Interested", "Moderately Interested", "Slightly Interested", "Not Interested"))
+table(OOL.sub$InterestPol)
+OOL.sub$ThoughtsElections[OOL.sub$ThoughtsElections == -1] <- NA
+OOL.sub$ThoughtsElections <- factor(OOL.sub$ThoughtsElections,labels=c( "Quite a lot", "Somewhat a lot", "Somewhat a little", "Only a little", "Not at all"))
+table(OOL.sub$ThoughtsElections)
+OOL.sub$WatchNews[OOL.sub$WatchNews == -1] <- NA
+OOL.sub$WatchNews <- factor(OOL.sub$WatchNews,labels=c ("None", "One Day", "Two Days", "Three Days", "Four Days", "Five Days", "Six Days", "Seven Days"))
+table(OOL.sub$WatchNews)
+OOL.sub$PoliticalAffil[OOL.sub$PoliticalAffil == -1] <- NA
+OOL.sub$PoliticalAffil <- factor(OOL.sub$PoliticalAffil, labels=c("Republican", "Democratic", "Independent", "Something Else"))
+table(OOL.sub$PoliticalAffil)
+```
+# Get frequency distribution for variables
+
+```{r}
+library(descr)
+freq(OOL$W1_A1)
+freq(OOL$W1_A2)
+freq(OOL$W1_A11)
+freq(OOL$W1_C1)
+```
+
+
+# Barplots
+
+```{r}
+freq(OOL.sub$InterestPol)
+freq(OOL.sub$ThoughtsElections)
+freq(OOL.sub$WatchNews)
+freq(OOL.sub$PoliticalAffil)
+```
+
+```{r}
+library(ggplot2)
+g1 <- ggplot(data = na.omit(OOL.sub), aes(WatchNews)) +
+  geom_bar(fill = c("green")) +
+  labs(x = "", y = "Total Number", title = "How Many Times a Week Do You Watch the News?") +
+  theme_bw() + 
+  theme(axis.text.x  = element_text(angle = 75, vjust = 0.5)) 
+g1
+```
+This is a graph of the variable "How Many Times a Week Do You Watch the News?". This graph shows the answers of participants when asked how often they watch the news in a week. Most participants either do not watch the news at all or they watch the news seven times a week. 
+
+```{r}
+g2 <- ggplot(data = na.omit(OOL.sub), aes(InterestPol)) +
+  geom_bar(fill = c("magenta")) +
+  labs(x = "", y = "Total Number", title = "How Interested Are You in Politics?") +
+  theme_bw() + 
+  theme(axis.text.x  = element_text(angle = 75, vjust = 0.5)) 
+g2
+```
+This is a graph of the variable "How Interested Are You In Politcs?". This graph shows the answers of participants when asked if they were at all interested in politics and if so, how interested were they. Most participants said they were "Very Interested" or "Moderately Interested". It is unexpected to see that most are "Very Interested" in politics when, in reference to the "How Many Times a Week Do You Watch the News?" variable, many participants do not watch the news (which could indicate that they are not up-to-date on recent events in regards to politics).
+```{r}
+g3 <- ggplot(data = na.omit(OOL.sub), aes(PoliticalAffil)) +
+  geom_bar(fill = c("red")) +
+  labs(x = "", y = "Total Number", title = "What Political Party Do You Affiliate Yourself With?") +
+  theme_bw() + 
+  theme(axis.text.x  = element_text(angle = 75, vjust = 0.5)) 
+g3
+```
+This is a graph of the variable "What Political Party Do You Affiliate Yourself With?". This graph shows the answers to participants when asked what political party they are. Most participants identified as Democratic and the second most common was Independent.
+```{r}
+summary(OOL$W1_A11)
+hist(OOL$W1_A11)
+plot(density(OOL$W1_A11, na.rm = TRUE))
+```
+This is a histogram of the variable "How Many Times a Week Do You Watch the News?". This graph peaks shows that the most common amount of days that participants watch the news per week are all seven days or they do not watch the news at all during the week. This is shown by the lines in the graph being significantly higher at those two points.
+
+```{r}
+summary(OOL$W1_A11)
+fivenum(OOL$W1_A11)
+median(OOL$W1_A11, na.rm = TRUE)
+mean(OOL$W1_A11, na.rm = TRUE)
+IQR(OOL$W1_A11, na.rm = TRUE)
+```
