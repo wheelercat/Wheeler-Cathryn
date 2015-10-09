@@ -1,7 +1,7 @@
 ---
 title: The Association Between Modern Media and Public Opinions
 author: 
-date: "September 25, 2015"
+date: "October 9, 2015"
 output: html_document
 ---
 
@@ -35,26 +35,9 @@ OOL.sub$PoliticalAffil[OOL.sub$PoliticalAffil == -1] <- NA
 OOL.sub$PoliticalAffil <- factor(OOL.sub$PoliticalAffil, labels=c("Republican", "Democratic", "Independent", "Something Else"))
 table(OOL.sub$PoliticalAffil)
 ```
-# Get frequency distribution for variables
-
-```{r}
-library(descr)
-freq(OOL$W1_A1)
-freq(OOL$W1_A2)
-freq(OOL$W1_A11)
-freq(OOL$W1_C1)
-```
 
 
-# Barplots
-
-```{r}
-freq(OOL.sub$InterestPol)
-freq(OOL.sub$ThoughtsElections)
-freq(OOL.sub$WatchNews)
-freq(OOL.sub$PoliticalAffil)
-```
-
+#Bar Graphs
 ```{r}
 library(ggplot2)
 g1 <- ggplot(data = na.omit(OOL.sub), aes(WatchNews)) +
@@ -84,12 +67,13 @@ g3 <- ggplot(data = na.omit(OOL.sub), aes(PoliticalAffil)) +
 g3
 ```
 This is a graph of the variable "What Political Party Do You Affiliate Yourself With?". This graph shows the answers to participants when asked what political party they are. Most participants identified as Democratic and the second most common was Independent.
+#Histogram
 ```{r}
 summary(OOL$W1_A11)
-hist(OOL$W1_A11)
-plot(density(OOL$W1_A11, na.rm = TRUE))
+hist(OOL$W1_A11, main = "How Many Times a Week Do You Watch the News?")
+plot(density(OOL$W1_A11, na.rm = TRUE), main = "How Many Times a Week Do You Watch the News?")
 ```
-This is a histogram of the variable "How Many Times a Week Do You Watch the News?". This graph peaks shows that the most common amount of days that participants watch the news per week are all seven days or they do not watch the news at all during the week. This is shown by the lines in the graph being significantly higher at those two points.
+This is a histogram of the variable "How Many Times a Week Do You Watch the News?". This graph peaks shows that the most common amount of days that participants watch the news per week are all seven days or they do not watch the news at all during the week. This is shown by the lines in the graph being significantly higher at those two points. This graph would not be considered skewed because of its two peaks at varying points. 
 
 ```{r}
 summary(OOL$W1_A11)
@@ -98,3 +82,18 @@ median(OOL$W1_A11, na.rm = TRUE)
 mean(OOL$W1_A11, na.rm = TRUE)
 IQR(OOL$W1_A11, na.rm = TRUE)
 ```
+#Bivariate Graph
+```{r}
+
+g1 <- ggplot(data = OOL.sub, aes(x = WatchNews, fill = PoliticalAffil)) +
+  geom_bar(position = "fill") + 
+  theme_bw()
+g1
+```
+This bivariate graph shows the the association between the amount of days per week the participants watch the news and their political affiliation. The bigger the color per affiliation indicates the more participants that watch the news per week for that political affiliatiate. As shown by the graph, most individuals that watch the news are Democratic and watch the news around four to five days a week. 
+
+```{r}
+library(vcd)
+mosaic(~WatchNews + InterestPol, data = OOL.sub, shade = TRUE) 
+```
+This mosaic plot shows the association between how many people are interested in the news and their interest in politics. As displayed in the graph, most individuals that watch the news seven days of the week are very to moderately interested in politics. Most individuals that do not watch the news are not very interest or slightly interested.
