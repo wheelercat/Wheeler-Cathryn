@@ -83,7 +83,7 @@ mean(OOL$W1_A11, na.rm = TRUE)
 IQR(OOL$W1_A11, na.rm = TRUE)
 ```
 #Bivariate Graph
-```{r}
+```{r, fig.height=12, fig.width=12}
 
 g1 <- ggplot(data = OOL.sub, aes(x = WatchNews, fill = PoliticalAffil)) +
   geom_bar(position = "fill") + 
@@ -92,8 +92,9 @@ g1
 ```
 This bivariate graph shows the the association between the amount of days per week the participants watch the news and their political affiliation. The bigger the color per affiliation indicates the more participants that watch the news per week for that political affiliatiate. As shown by the graph, most individuals that watch the news are Democratic and watch the news around four to five days a week. 
 
-```{r}
+```{r, fig.height=12, fig.width=12}
 library(vcd)
 mosaic(~WatchNews + InterestPol, data = OOL.sub, shade = TRUE) 
 ```
-This mosaic plot shows the association between how many people are interested in the news and their interest in politics. As displayed in the graph, most individuals that watch the news seven days of the week are very to moderately interested in politics. Most individuals that do not watch the news are not very interest or slightly interested.
+  
+  This mosaic plot shows the association between how many people are interested in the news and their interest in politics. As displayed in the graph, most individuals that watch the news seven days of the week are very to moderately interested in politics. Most individuals that do not watch the news are not very interest or slightly interested.
