@@ -19,7 +19,7 @@ Variables I have considered in my data include W1_A1 (how interested participant
 library(PDS)
 library(dplyr)
 OOL.sub <- OOL %>% 
-   rename(InterestPol = W1_A1, ThoughtsElections = W1_A2, WatchNews = W1_A11, PoliticalAffil = W1_C1) %>%
+   rename(InterestPol = W1_A1, ThoughtsElections = W1_A2, WatchNews = W1_A11, PoliticalAffil = W1_C1, Vote = W2_QB3) %>%
    select(InterestPol, ThoughtsElections, WatchNews, PoliticalAffil)
 summary(OOL.sub)
 OOL.sub$InterestPol[OOL.sub$InterestPol == -1] <- NA
@@ -98,3 +98,10 @@ mosaic(~WatchNews + InterestPol, data = OOL.sub, shade = TRUE)
 ```
   
   This mosaic plot shows the association between how many people are interested in the news and their interest in politics. As displayed in the graph, most individuals that watch the news seven days of the week are very to moderately interested in politics. Most individuals that do not watch the news are not very interest or slightly interested.
+  
+#ANOVA 
+##Hypothesis
+$H_0:\mu_{Extremely Interested} = \mu_{Very Interested}=\mu_{Moderately Interested} =\mu_{Slightly Interested}=\mu_{Not Interested}$ versus $H_1:\mu_{i} \neq \mu_{j}$ for at least one $i \neq j$ pair.  
+Above shows how interested participants are in politics and how often they watch the news. People more interested in politics will most likely watch the news more often.
+
+
