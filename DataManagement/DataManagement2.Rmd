@@ -1,7 +1,7 @@
 ---
 title: The Association Between Modern Media and Public Opinions
 author: 
-date: "October 9, 2015"
+date: "October 29, 2015"
 output: html_document
 ---
 
@@ -19,8 +19,7 @@ Variables I have considered in my data include W1_A1 (how interested participant
 library(PDS)
 library(dplyr)
 OOL.sub <- OOL %>% 
-   rename(InterestPol = W1_A1, ThoughtsElections = W1_A2, WatchNews = W1_A11, PoliticalAffil = W1_C1, Vote = W2_QB3) %>%
-   select(InterestPol, ThoughtsElections, WatchNews, PoliticalAffil)
+   rename(InterestPol = W1_A1, ThoughtsElections = W1_A2, WatchNews = W1_A11, PoliticalAffil = W1_C1, Welfare = W1_N1A) 
 summary(OOL.sub)
 OOL.sub$InterestPol[OOL.sub$InterestPol == -1] <- NA
 OOL.sub$InterestPol <- factor(OOL.sub$InterestPol,labels=c("Extremely Interested","Very Interested", "Moderately Interested", "Slightly Interested", "Not Interested"))
@@ -32,8 +31,11 @@ OOL.sub$WatchNews[OOL.sub$WatchNews == -1] <- NA
 OOL.sub$WatchNews <- factor(OOL.sub$WatchNews,labels=c ("None", "One Day", "Two Days", "Three Days", "Four Days", "Five Days", "Six Days", "Seven Days"))
 table(OOL.sub$WatchNews)
 OOL.sub$PoliticalAffil[OOL.sub$PoliticalAffil == -1] <- NA
+OOL.sub$Welfare[OOL.sub$Welfare == 998] <- NA
 OOL.sub$PoliticalAffil <- factor(OOL.sub$PoliticalAffil, labels=c("Republican", "Democratic", "Independent", "Something Else"))
 table(OOL.sub$PoliticalAffil)
+OOL.sub <- OOL.sub %>%
+   select(InterestPol, ThoughtsElections, WatchNews, PoliticalAffil, Welfare)
 ```
 
 
@@ -99,9 +101,63 @@ mosaic(~WatchNews + InterestPol, data = OOL.sub, shade = TRUE)
   
   This mosaic plot shows the association between how many people are interested in the news and their interest in politics. As displayed in the graph, most individuals that watch the news seven days of the week are very to moderately interested in politics. Most individuals that do not watch the news are not very interest or slightly interested.
   
-#ANOVA 
-##Hypothesis
+#Hypothesis 
+
 $H_0:\mu_{Extremely Interested} = \mu_{Very Interested}=\mu_{Moderately Interested} =\mu_{Slightly Interested}=\mu_{Not Interested}$ versus $H_1:\mu_{i} \neq \mu_{j}$ for at least one $i \neq j$ pair.  
-Above shows how interested participants are in politics and how often they watch the news. People more interested in politics will most likely watch the news more often.
 
+Above shows how interested participants are in politics and how often they watch the news. People more interested in politics will most likely watch the news more often. There is no significant difference in the data so the null hypothesis is accepted.
 
+##ANOVA
+```{r}
+tapply(OOL.sub$Welfare, OOL.sub$WatchNews, mean, na.rm = TRUE)
+tapply(OOL.sub$Welfare, OOL.sub$WatchNews, sd, na.rm = TRUE)
+library(ggplot2)
+ggplot(data = na.omit(OOL.sub), aes(x = WatchNews, y = Welfare, fill= WatchNews))+
+  geom_boxplot() +
+  theme_bw() +
+  guides(fill = FALSE) +
+  labs(x = "WatchNews" , y = "Welfare", title= "Welfare vs. WatchNews")
+ggplot(data = OOL.sub , aes(x= WatchNews, y= Welfare)) +
+  geom_violin() +
+  theme_bw() +
+  guides(fill = FALSE) +
+  labs(x = "WatchNews", y= "Welfare")
+
+#ANOVA Test
+
+mod1 <- aov(Welfare ~ WatchNews, data = OOL.sub)
+mod1
+summary(mod1)
+
+# Post-hoc test
+
+CIS <- TukeyHSD(mod1)
+CIS
+opar <- par(no.readonly = TRUE) 
+par(mar = c(5, 11, 5, 1))
+plot(CIS, las = 1)
+par(opar)
+mod<- aov(Welfare~WatchNews, data=OOL.sub)
+summary(mod)
+ci<- TukeyHSD(mod)
+ci
+plot(ci)
+```
+According to the above data, there is an association between how much news you watch and welfare rating. Participants that watch the news more days of the week tend to rate people on welfare lower than those that do not watch the news as often.
+
+##Chi-Squared 
+```{r}
+chi.name <- chisq.test(OOL.sub$InterestPol, OOL.sub$PoliticalAffil)
+chi.name$obs
+tbl= table(OOL.sub$InterestPol, OOL.sub$PoliticalAffil)
+tbl
+chisq.test(tbl)
+chisq.test(tbl)$exp
+p1<- chisq.test(tbl[,c(1,2)])
+p2<- chisq.test(tbl[,c(1,3)])
+p3<- chisq.test(tbl[,c(1,4)])
+p4 <-chisq.test(tbl[,c(2,3)])
+p5 <-chisq.test(tbl[,c(3,4)])$p.value
+p6 <-chisq.test(tbl[,c(2,4)])
+```
+According to the above data, the Chi-Squared value is not significant. This means that the null hypothesis is accepted.
