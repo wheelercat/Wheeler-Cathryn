@@ -1,7 +1,7 @@
 ---
 title: The Association Between Modern Media and Public Opinions
 author: 
-date: "October 29, 2015"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -19,10 +19,9 @@ Variables I have considered in my data include W1_A1 (how interested participant
 library(PDS)
 library(dplyr)
 OOL.sub <- OOL %>% 
-   rename(InterestPol = W1_A1, ThoughtsElections = W1_A2, WatchNews = W1_A11, PoliticalAffil = W1_C1, Welfare = W1_N1A) 
-summary(OOL.sub)
+   rename(InterestPol = W1_A1, ThoughtsElections = W1_A2, WatchNews = W1_A11, PoliticalAffil = W1_C1, Welfare = W1_N1A, Congress = W1_N1I) 
 OOL.sub$InterestPol[OOL.sub$InterestPol == -1] <- NA
-OOL.sub$InterestPol <- factor(OOL.sub$InterestPol,labels=c("Extremely Interested","Very Interested", "Moderately Interested", "Slightly Interested", "Not Interested"))
+OOL.sub$InterestPol <- factor(OOL.sub$InterestPol,labels=c("Extremely","Very", "Moderately Interested", "Slightly", "Not Interested"))
 table(OOL.sub$InterestPol)
 OOL.sub$ThoughtsElections[OOL.sub$ThoughtsElections == -1] <- NA
 OOL.sub$ThoughtsElections <- factor(OOL.sub$ThoughtsElections,labels=c( "Quite a lot", "Somewhat a lot", "Somewhat a little", "Only a little", "Not at all"))
@@ -32,10 +31,11 @@ OOL.sub$WatchNews <- factor(OOL.sub$WatchNews,labels=c ("None", "One Day", "Two 
 table(OOL.sub$WatchNews)
 OOL.sub$PoliticalAffil[OOL.sub$PoliticalAffil == -1] <- NA
 OOL.sub$Welfare[OOL.sub$Welfare == 998] <- NA
+OOL.sub$Congress[OOL.sub$Congress == 998] <- NA
 OOL.sub$PoliticalAffil <- factor(OOL.sub$PoliticalAffil, labels=c("Republican", "Democratic", "Independent", "Something Else"))
 table(OOL.sub$PoliticalAffil)
 OOL.sub <- OOL.sub %>%
-   select(InterestPol, ThoughtsElections, WatchNews, PoliticalAffil, Welfare)
+   select(InterestPol, ThoughtsElections, WatchNews, PoliticalAffil, Welfare, Congress)
 ```
 
 
@@ -86,7 +86,6 @@ IQR(OOL$W1_A11, na.rm = TRUE)
 ```
 #Bivariate Graph
 ```{r, fig.height=12, fig.width=12}
-
 g1 <- ggplot(data = OOL.sub, aes(x = WatchNews, fill = PoliticalAffil)) +
   geom_bar(position = "fill") + 
   theme_bw()
@@ -146,6 +145,7 @@ plot(ci)
 According to the above data, there is an association between how much news you watch and welfare rating. Participants that watch the news more days of the week tend to rate people on welfare lower than those that do not watch the news as often.
 
 ##Chi-Squared 
+Hypothesis:  The Interest in Politics and Political affiliation variables are independent. The alternative would be they are dependent on one another.
 ```{r}
 chi.name <- chisq.test(OOL.sub$InterestPol, OOL.sub$PoliticalAffil)
 chi.name$obs
@@ -161,3 +161,23 @@ p5 <-chisq.test(tbl[,c(3,4)])$p.value
 p6 <-chisq.test(tbl[,c(2,4)])
 ```
 According to the above data, the Chi-Squared value is not significant. This means that the null hypothesis is accepted.
+
+##Correlation Coefficient
+```{r}
+library(ggplot2)
+ ggplot(data = OOL.sub, aes(x = Congress, y = Welfare)) + 
+   geom_point(color = "purple")
+   theme_bw()
+```
+
+
+```{r}
+ cor(OOL.sub$Congress, OOL.sub$Welfare)
+cor.test(OOL.sub$Congress, OOL.sub$Welfare)
+ggplot(data = OOL.sub, aes(x = Congress, y = Welfare)) + 
+  geom_point(color = "purple") +
+  theme_bw() + 
+  labs(x = "How would you rate Congress?", y = "How would you rate people on welfare?") +
+  stat_smooth(method = lm)
+```
+The correlation of the data is estimated to be 0.3178078. There is no one set direction that the data is graphed. Most of the data is scattered all around the graph. Therefore, there is not a very strong correlation coefficient. 
