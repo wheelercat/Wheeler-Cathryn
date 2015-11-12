@@ -85,17 +85,21 @@ mean(OOL$W1_A11, na.rm = TRUE)
 IQR(OOL$W1_A11, na.rm = TRUE)
 ```
 #Bivariate Graph
+
+##Welfare Rating vs. Political Affiliation
 ```{r, fig.height=12, fig.width=12}
 g1 <- ggplot(data = OOL.sub, aes(x = WatchNews, fill = PoliticalAffil)) +
   geom_bar(position = "fill") + 
   theme_bw()
 g1
 ```
-This bivariate graph shows the the association between the amount of days per week the participants watch the news and their political affiliation. The bigger the color per affiliation indicates the more participants that watch the news per week for that political affiliatiate. As shown by the graph, most individuals that watch the news are Democratic and watch the news around four to five days a week. 
+This bivariate graph shows the the association between the amount of days per week the participants watch the news and their political affiliation. The bigger the color per affiliation indicates the more participants that watch the news per week for that political affiliatiate. As shown by the graph, most individuals that watch the news are Democratic and watch the news around four to five days a week.  
 
+##Welfare Rating vs. Interest in Politics
 ```{r, fig.height=12, fig.width=12}
 library(vcd)
 mosaic(~WatchNews + InterestPol, data = OOL.sub, shade = TRUE) 
+
 ```
   
   This mosaic plot shows the association between how many people are interested in the news and their interest in politics. As displayed in the graph, most individuals that watch the news seven days of the week are very to moderately interested in politics. Most individuals that do not watch the news are not very interest or slightly interested.
@@ -115,7 +119,7 @@ ggplot(data = na.omit(OOL.sub), aes(x = WatchNews, y = Welfare, fill= WatchNews)
   geom_boxplot() +
   theme_bw() +
   guides(fill = FALSE) +
-  labs(x = "WatchNews" , y = "Welfare", title= "Welfare vs. WatchNews")
+  labs(x = "How many days a week do you watch the news?" , y = "How would you rate people on welfare?", title= "Welfare Rating vs. Days a week News is Watched")
 ggplot(data = OOL.sub , aes(x= WatchNews, y= Welfare)) +
   geom_violin() +
   theme_bw() +
@@ -166,18 +170,28 @@ According to the above data, the Chi-Squared value is not significant. This mean
 ```{r}
 library(ggplot2)
  ggplot(data = OOL.sub, aes(x = Congress, y = Welfare)) + 
-   geom_point(color = "purple")
+   geom_point(color = "purple") +
    theme_bw()
 ```
-
+This correlation coefficient measures how participants would rate Congress from 1-100 and it's correlation to how participants rate people on welfare from 1-100. 
 
 ```{r}
- cor(OOL.sub$Congress, OOL.sub$Welfare)
+cor(OOL.sub$Congress, OOL.sub$Welfare)
 cor.test(OOL.sub$Congress, OOL.sub$Welfare)
 ggplot(data = OOL.sub, aes(x = Congress, y = Welfare)) + 
-  geom_point(color = "purple") +
-  theme_bw() + 
-  labs(x = "How would you rate Congress?", y = "How would you rate people on welfare?") +
-  stat_smooth(method = lm)
+geom_point(color = "purple") +
+theme_bw() + 
+labs(x = "How would you rate Congress?", y = "How would you rate people on welfare?") +
+stat_smooth(method = lm)
 ```
-The correlation of the data is estimated to be 0.3178078. There is no one set direction that the data is graphed. Most of the data is scattered all around the graph. Therefore, there is not a very strong correlation coefficient. 
+The correlation of the data is estimated to be 0.3178078. There is no one set direction that the data is graphed. Most of the data is scattered all around the graph. Therefore, there is not a very strong correlation coefficient. There is a slight upward slope in the correlation gap. There are a few outliers, such as a participant rating Congress as 100 and people on welfare between 1-25.
+
+##Regression Assignment
+```{r}
+mod <- lm(Congress ~ Welfare, data = OOL.sub)
+summary(mod)
+predict(mod, newdata = data.frame(Welfare = 60))
+PV <- predict(mod, newdata = data.frame(Welfare = 60))
+PV
+```
+The prediction for the correlation between how participants rate Congress and how participants rate people on healthcare is 38.41324. It slopes slightly upward on the graph. Most ratings fall around the middle to lower end of the graph, which means that most people don't give Congress or people on welfare a high rating.
