@@ -184,7 +184,8 @@ theme_bw() +
 labs(x = "How would you rate Congress?", y = "How would you rate people on welfare?") +
 stat_smooth(method = lm)
 ```
-The correlation of the data is estimated to be 0.3178078. There is no one set direction that the data is graphed. Most of the data is scattered all around the graph. Therefore, there is not a very strong correlation coefficient. There is a slight upward slope in the correlation gap. There are a few outliers, such as a participant rating Congress as 100 and people on welfare between 1-25.
+  
+  The correlation of the data is estimated to be 0.3178078. There is no one set direction that the data is graphed. Most of the data is scattered all around the graph. Therefore, there is not a very strong correlation coefficient. There is a slight upward slope in the correlation gap. There are a few outliers, such as a participant rating Congress as 100 and people on welfare between 1-25.
 
 ##Regression Assignment
 ```{r}
