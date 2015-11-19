@@ -195,4 +195,4 @@ predict(mod, newdata = data.frame(Welfare = 60))
 PV <- predict(mod, newdata = data.frame(Welfare = 60))
 PV
 ```
-The prediction for the correlation between how participants rate Congress and how participants rate people on healthcare is 38.41324. It slopes slightly upward on the graph. Most ratings fall around the middle to lower end of the graph, which means that most people don't give Congress or people on welfare a high rating.
+The prediction for the correlation between how participants rate Congress and how participants rate people on healthcare is 38.41324. It slopes slightly upward on the graph, meaning it is not very strong. Most ratings fall around the middle to lower end of the graph, which means that most people don't give Congress or people on welfare a high rating. 
